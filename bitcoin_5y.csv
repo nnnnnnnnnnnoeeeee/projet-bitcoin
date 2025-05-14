@@ -1,0 +1,11 @@
+csv_path = "bitcoin_5y.csv"
+use_csv = os.path.exists(csv_path) and period_label[1] in ["3y", "4y", "5y"]
+
+if use_csv:
+    df = pd.read_csv(csv_path, parse_dates=["timestamp"])
+    period_days = period_to_days(period_label[1])
+    end_date = pd.Timestamp.now()
+    start_date = end_date - pd.Timedelta(days=period_days)
+    df = df[(df["timestamp"] >= start_date) & (df["timestamp"] <= end_date)]
+else:
+    # ...récupération dynamique pour les autres cas...
